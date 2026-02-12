@@ -13,6 +13,7 @@ use std::process::{Command, Stdio};
 
 use bids_smemlib::smem::SMemIFExt;
 use bids_smemlib::types::*;
+use serial_test::serial;
 
 /// Path to the C# interop test project.
 fn csharp_project_dir() -> PathBuf {
@@ -22,7 +23,15 @@ fn csharp_project_dir() -> PathBuf {
 /// Build the C# interop test project. Returns true if successful.
 fn build_csharp() -> bool {
     let status = Command::new("dotnet")
-        .args(["build", "-c", "Release", "--nologo", "-v", "quiet"])
+        .args([
+            "build",
+            "-c",
+            "Release",
+            "--nologo",
+            "-v",
+            "quiet",
+            "/maxcpucount:1",
+        ])
         .current_dir(csharp_project_dir())
         .status();
     match status {
@@ -141,6 +150,7 @@ fn test_panel() -> Vec<i32> {
 // ---- Test: C# writes BSMD, Rust reads ----
 
 #[test]
+#[serial]
 fn test_csharp_writes_bsmd_rust_reads() {
     assert!(build_csharp(), "Failed to build C# interop test project");
 
@@ -172,6 +182,7 @@ fn test_csharp_writes_bsmd_rust_reads() {
 // ---- Test: Rust writes BSMD, C# reads ----
 
 #[test]
+#[serial]
 fn test_rust_writes_bsmd_csharp_reads() {
     assert!(build_csharp(), "Failed to build C# interop test project");
 
@@ -198,6 +209,7 @@ fn test_rust_writes_bsmd_csharp_reads() {
 // ---- Test: C# writes OpenD, Rust reads ----
 
 #[test]
+#[serial]
 fn test_csharp_writes_open_d_rust_reads() {
     assert!(build_csharp(), "Failed to build C# interop test project");
 
@@ -222,6 +234,7 @@ fn test_csharp_writes_open_d_rust_reads() {
 // ---- Test: Rust writes OpenD, C# reads ----
 
 #[test]
+#[serial]
 fn test_rust_writes_open_d_csharp_reads() {
     assert!(build_csharp(), "Failed to build C# interop test project");
 
@@ -246,6 +259,7 @@ fn test_rust_writes_open_d_csharp_reads() {
 // ---- Test: C# writes Panel array, Rust reads ----
 
 #[test]
+#[serial]
 fn test_csharp_writes_panel_rust_reads() {
     assert!(build_csharp(), "Failed to build C# interop test project");
 
@@ -274,6 +288,7 @@ fn test_csharp_writes_panel_rust_reads() {
 // ---- Test: Rust writes Panel array, C# reads ----
 
 #[test]
+#[serial]
 fn test_rust_writes_panel_csharp_reads() {
     assert!(build_csharp(), "Failed to build C# interop test project");
 
@@ -302,6 +317,7 @@ fn test_rust_writes_panel_csharp_reads() {
 // ---- Test: Layout dump (for debugging) ----
 
 #[test]
+#[serial]
 fn test_layout_dump() {
     assert!(build_csharp(), "Failed to build C# interop test project");
 

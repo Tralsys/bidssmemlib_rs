@@ -12,6 +12,7 @@ thiserror = "2"
 
 [dev-dependencies]
 static_assertions = "1"
+serial_test = "3"
 
 [target.'cfg(windows)'.dependencies]
 windows = { version = "0.59", features = [
