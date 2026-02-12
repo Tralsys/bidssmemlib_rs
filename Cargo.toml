@@ -1,0 +1,22 @@
+[package]
+name = "bids-smemlib"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "BIDS Shared Memory Library for Rust - binary-compatible port of the C# BIDSSMemLib"
+repository = "https://github.com/Tralsys/bidssmemlib_rs"
+
+[dependencies]
+bytemuck = { version = "1", features = ["derive"] }
+thiserror = "2"
+
+[dev-dependencies]
+static_assertions = "1"
+serial_test = "3"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.59", features = [
+    "Win32_System_Memory",
+    "Win32_Foundation",
+    "Win32_Security",
+] }
