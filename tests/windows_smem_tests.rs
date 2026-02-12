@@ -1,6 +1,6 @@
 #![cfg(windows)]
 
-use bids_smemlib::smem::SMemIFExt;
+use bids_smemlib::smem::{SMemIF, SMemIFExt};
 use bids_smemlib::types::*;
 
 #[test]
